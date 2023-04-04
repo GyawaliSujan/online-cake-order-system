@@ -1,0 +1,33 @@
+{% extends '__base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+
+{% block title %}
+	Cakeg
+{% endblock %}
+
+{% block main_content_area %}
+    <section class="container">
+        <div class="row">
+            <div class="col-md-12 faq">
+                <h2>{{ heading }}</h2>
+                <div class="qa">
+                    <div class="answer">
+                        {{ message }}
+                        You can also contact us on <a href='//m.me/cake.ghorahi'>messenger</a>.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+{% endblock %}
+
+{% block  js_files_bottom %}
+    {{ block.super }}
+
+    <!-- Custom JS -->
+    <script type="text/javascript" src="{% static 'js/custom.js' %}"></script>
+
+{% endblock %}

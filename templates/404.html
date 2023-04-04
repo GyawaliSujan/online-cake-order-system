@@ -1,0 +1,39 @@
+{% extends '__base.html' %}
+
+{% load staticfiles %}
+
+{% block title %}
+	Page Not Found
+{% endblock %}
+
+
+{% block main_content_area %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="error-template">
+                <h1>
+                    Oops! 404 Error
+                </h1>
+                <div class="error-details">
+                    We can't seem to find the page you were looking for. Use your browsers Back button to navigate to the page you have prevously come from
+                    <br>
+                    <b>
+                        Or you could just press this neat little button:
+                    </b>
+                </div>
+                <div class="error-actions">
+                    <a href="{% url 'home' %}" class="btn btn-primary btn-add"><span class="glyphicon glyphicon-home"></span>
+                        Take Me Home </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %} {# main content end #}
+
+{% block footer %}
+{% endblock %} {# footer end #}
+

@@ -1,0 +1,108 @@
+{% extends '__base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+
+{% block title %}
+	Contact
+{% endblock %}
+
+{% block main_content_area %}
+
+  <section class="contact-title text-center">
+    <div id="map-canvas" class="contact-wrapper">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14086.165376955796!2d82.4848531!3d28.038491!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x46ac3adf45705a87!2sSmart+Science+and+Education!5e0!3m2!1sen!2snp!4v1561806722621!5m2!1sen!2snp" width="100%" height="300" frameborder="0" style="border:0" allowfullscreen></iframe>
+    </div>
+  </section>
+
+
+<section class="contact-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 contact-address">
+                <h2>CONTACT DETAILS</h2>
+                <p><b>If you have any questions please don't forget to contact us at following address.</b></p>
+                <div class="contact-block clearfix">
+                    <div class="left-block">
+                        <i class="fa fa-map-marker"></i>
+                    </div>
+                    <div class="right-block">
+                        <h4 class="contact-block-heading">Office Address</h4>
+                        <p class="contact-block-paragrap"> Jaycees Road, Ghorahi, Nepal. </p>
+                    </div>
+                </div>
+                <div class="contact-block clearfix">
+                    <div class="left-block">
+                        <i class="fa fa-phone"></i>
+                    </div>
+                    <div class="right-block">
+                        <h4 class="contact-block-heading">Phone</h4>
+                        {% for number in PHONE_NUMBERS %}
+                        <div class="contact-block-paragrap">Mobile1: +977-{{ number }}</div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="contact-block clearfix">
+                    <div class="left-block">
+                        <i class="fa fa-envelope-o"></i>
+                    </div>
+                    <div class="right-block">
+                        <h4 class="contact-block-heading">Email Address</h4>
+                        <p class="contact-block-paragrap"><a href="mailto:cakeg@gmail.com">{{ CONTACT_EMAIL }}</a></p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-md-6 contact-form">
+                <h2>LET'S KEEP IN TOUCH</h2>
+                <div id="contactFormResponse">
+
+                </div>
+                <form id="contactForm" action="" method="post" enctype="multipart/formdata">{% csrf_token %}
+                    {{ form.non_field_errors }}
+                    <div class="form-group">
+                       {{form.name.errors}}
+                        {% bootstrap_field form.name layout='inline' %}
+                    </div>
+                    <div class="form-group">
+                        {{form.email.errors}}
+                        {% bootstrap_field form.email layout='inline' %}
+                    </div>
+                    <div class="form-group">
+                        {{form.phone.errors}}
+                        {% bootstrap_field form.phone layout='inline' %}
+                    </div>
+                    <div class="form-group">
+                       {{form.message.errors}}
+                        {% bootstrap_field form.message layout='inline' %}
+                    </div>
+                    <button type="submit" name="submit" id="cfsubmit" class="contact-form-btn btn btn-primary" required>Send Message</button>
+                </form>
+            </div>
+
+            <div class="col-md-12 social">
+                <h2 class="text-center">STAY IN TOUCH WITH US</h2>
+                <ul class="list-inline social-icons text-center">
+                    <li><a href="http://facebook.com/cake.ghorahi" rel="noreferrer nofollow" target="_blank">
+                      <i class="fa fa-facebook-square"></i>
+                    </a></li>
+{#                    <li><a href="https://twitter.com/cakeg"><i class="fa fa-twitter-square"></i></a></li>#}
+{#                    <li><a href="https://www.instagram.com/cakeg"><i class="fa fa-instagram"></i></a></li>#}
+                   <!--  <li><a href=""><i class="fa fa-youtube-square"></i></a></li>
+                    <li><a href=""><i class="fa fa-google-plus-square"></i></a></li> -->
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block  js_files_bottom %}
+    {{ block.super }}
+
+    <!-- Custom JS -->
+    <script type="text/javascript" src="{% static 'js/custom.js' %}"></script>
+
+{% endblock %}

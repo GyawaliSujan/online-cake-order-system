@@ -1,0 +1,33 @@
+{% extends "__base.html" %}
+{% load static from staticfiles %}
+
+
+
+{% block main_content_area %}
+    <div class="center-block text-center login">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <p>This account has not been activated yet. Please check your email and click on the activation link.</p>
+                <p>If you have not received your activation email please check your spam folder. Or resend the email.</p>
+            </div>
+        </div>
+        <form id="resend_activation_form" enctype="multipart/form-data" action="." method="POST" role="form">
+            <div class="row">
+                {% csrf_token %}
+
+                <div class="col-md-4 col-md-offset-4">
+                    {{form.email}}
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-primary" value="Resend Activation Email" />
+                    </div>
+                </div>
+            </div>
+        </form>
+     </div>
+
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends '__base.html' %}
+
+{% load staticfiles %}
+
+{% block title %}
+	Internal Server Error
+{% endblock %}
+
+
+{% block main_content_area %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="error-template">
+                <h1>
+                    Oops! 500 Error
+                </h1>
+                <div class="error-details">
+                   It seems your request resulted in Error, we will be fixing it soon.
+                </div>
+                <div class="error-actions">
+                    <a href="{% url 'home' %}" class="btn btn-primary btn-add"><span class="glyphicon glyphicon-home"></span>
+                        Take Me Home </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %} {# main content end #}
+
+{% block footer %}
+{% endblock %} {# footer end #}
+

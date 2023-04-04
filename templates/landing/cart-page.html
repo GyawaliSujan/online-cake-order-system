@@ -1,0 +1,84 @@
+{% extends '__base.html' %}>
+
+{% load staticfiles %}
+
+{% block title %}
+	Cart
+{% endblock %}
+
+{% block css_files %}
+    <link rel="icon" href="{% static 'img/favicon_1.ico' %}" type="image/x-icon" />
+    <link rel="shortcut icon" href="{% static 'img/favicon_1.ico' %}" type="image/x-icon" />
+    {{ block.super }}
+{% endblock %}
+
+
+{% block main_content_area %}
+<section class="container">
+    <div class="row">
+        <div class="breadcrumblist">
+            <ul class="breadcrumb">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="#">Cart</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row cart-page">
+        <table class="table table-responsive" id="checkout-table">
+            <thead>
+                <tr>
+                    <th class="col-md-3">Image</th>
+                    <th class="col-md-3">Product</th>
+                    <th class="col-md-2">Quantity</th>
+                    <th class="col-md-2">Price</th>
+                    <th class="col-md-2">Action</th>
+                </tr>
+            </thead>
+            <tbody id="product-list">
+                {% for cart_item in cart_items %}
+                    <tr>
+                        <td><img src="{{ cart_item.image }}" alt="cake" width="150px" height="150px"></td>
+                        <td>
+                            <h4 style="height:20px;overflow: hidden;margin-bottom: 0px">{{ cart_item.name }}</h4>
+                            <p>{{ cart_item.cake_type }}</p>
+                            <p>Weight: {{ cart_item.weight }} lbs</p>
+                            <p>Flavor: {{ cart_item.flavor_name }}</p>
+                            <p>Shape: {{ cart_item.shape_name }}</p>
+                        </td>
+                        <td>{{ cart_item.quantity }}</td>
+                        <td>Rs. {{ cart_item.total_price }}</td>
+                        <td>
+                            <form method="post">{% csrf_token %}<input type="hidden" name="removeCartItem" value="{{ forloop.counter0 }}" /><button type="submit" class="btn btn-danger"><i class="fa fa-remove"></i></button></form>
+                            <!--form onsubmit="return false"><button type="submit" class="btn btn-success"><i class="fa fa-edit"></i></button></form-->
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% if num_cart_items == 0 %}
+            <div>No items on cart!!!</div>
+        {% endif %}
+        <!--Buttons-->
+        <div class="buttons-cart">
+            <a href="{% url 'product_search' %}" type="submit" class="btn btn-primary btn-add">Add More Cakes</a>
+            {% if num_cart_items != 0 %}
+                <a href="{% url 'checkout'  %}" type="submit" class="btn btn-primary btn-add">Place Order</a>
+            {% endif %}
+        </div>
+
+    </div>
+</section>
+
+{% endblock %} {# main content end #}
+
+
+
+{% block js_files_bottom %}
+{{ block.super }}
+<!-- Custom JS -->
+<script type="text/javascript" src="{% static 'js/custom.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/shoppingcart.js' %}"></script>
+
+{% endblock %}
+

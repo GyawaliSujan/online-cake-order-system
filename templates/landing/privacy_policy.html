@@ -1,0 +1,83 @@
+{% extends '__base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+
+{% block title %}
+  Privacy Policy
+{% endblock %}
+
+{% block main_content_area %}
+    <section class="container">
+    <div class="row">
+        <div class="breadcrumblist">
+            <ul class="breadcrumb">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 faq">
+          Our server is of the industry standard, and is powered by the most comprehensive software
+          available today for secure e-commerce transactions. cake-g.com takes your privacy seriously.
+          Please read the following to learn more on our privacy policy:
+          <div class="qa">
+              »
+              <span class="ml-15">
+                This Privacy Policy covers all your personal and identifiable information that we collect from you. When you register with cake-g.com, we ask for your name, email, street address and phone number. Once you register with us and sign-in to our services, your information is held confidential.
+              </span>
+          </div>
+          <div class="qa">
+              »
+              <span class="ml-15">
+                cake-g.com automatically receives and records information on our server, logs from your browser including your IP address and the page you requested. cakeg.com will not sell your personal and identifiable information.
+              </span>
+          </div>
+          <div class="qa">
+              »
+              <span class="ml-15">
+                cake-g.com deems its policy in this regard to be made clear. Users of our service should
+                be made well aware of the risks that are inherent not with us but on the Internet in
+                general. cake-g.com absolutely has NO CONTROLover what others may do with your
+                information. Consequently, cake-g.com must necessarily
+                decline any or all responsibilities in the event that your private information is violated
+                by others. If you do not agree with this policy, you should not use the links which appear
+                on our website.
+              </span>
+          </div>
+          <div class="qa">
+              »
+              <span class="ml-15">
+                cake-g.com offers you the choice to edit your Account Information and preferences at any
+                time, including your shopping cart info.
+              </span>
+          </div>
+          <div class="qa">
+              »
+              <span class="ml-15">
+                cake-g.com account information is password-protected for your privacy and security.
+              </span>
+          </div>
+          <div class="qa">
+{#              »#}
+{#              <span class="ml-15">#}
+{#                Children should get prior permission from their parents to send any information about#}
+{#                themselves (such as their names, email addresses, and phone numbers) over the Internet,#}
+{#                to us or to anyone else. We would not accept the personal and identifiable information#}
+{#                of anyone under 14 to the best of our knowledge.#}
+{#              </span>#}
+{#          </div>#}
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}
+
+{% block  js_files_bottom %}
+    {{ block.super }}
+
+    <!-- Custom JS -->
+    <script type="text/javascript" src="{% static 'js/custom.js' %}"></script>
+
+{% endblock %}

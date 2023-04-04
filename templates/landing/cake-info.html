@@ -1,0 +1,349 @@
+{% extends '__base.html' %}
+
+{% load staticfiles %}
+
+{% block title %}
+	{{ item_detail.name }}
+{% endblock %}
+{% block og_meta %}
+    <meta property='og:title' content='{{ item_detail.name }} | Cake-G'/>
+    <meta property='og:image' content="{{ request.scheme }}://{{ request.get_host }}{{ item_detail.image.url }}"/>
+    <meta property='og:description' content='{{ item_detail.description }}'/>
+    <meta property='og:url' content='{{ request.scheme }}://{{ request.get_host }}{{ request.path }}'>
+    <meta property="og:type" content="website"/>
+    <meta property="fb:app_id" content="425224041406795"/>
+{% endblock %}
+
+
+{% block css_files %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/slick.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/slick-theme.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <style>
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
+        input[type=number] {
+            -moz-appearance:textfield;
+         }
+        .errorlist {
+            color: #ff0000;
+        }
+    </style>
+{% endblock %}
+
+
+{% block main_content_area %}
+<div class="container">
+    <div class="row">
+        <div class="breadcrumblist">
+            <ul class="breadcrumb">
+                <li><a href="/">Home</a></li>
+                <li><a href="{% url "product_search" %}">Cakes</a></li>
+                <li class="active"><a href="#">{{ item_detail.name }}</a></li>
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="row cake-information">
+        <div class="col-md-5 col-sm-12">
+            <div class="cake-image">
+                <img id="zoom_01" src="{{ item_detail.image.url }}" data-zoom-image="{{ item_detail.image.url }}" alt="cake" class="img img-responsive center">
+            </div>
+        </div>
+        <div class="col-md-7 col-sm-12">
+            <h2 class="cake-title">{{ item_detail.name|title }}</h2>
+            <form action="#" method="post" style="margin-left: 20px;">
+                {% csrf_token %}
+                {{ cart_form.cake }}
+                <table class="table table-responsive row">
+                    <tr>
+                        <td class="col-md-2">Price</td>
+                        <td class="col-md-10"><span class="cake-price" id="productPrice"> Rs. {{ item_detail.price }} per lbs</span></td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-2">Type</td>
+                        <td class="col-md-10">
+                            <nav class="cake-option">
+                                {% for cake_type in cart_form.cake_type %}
+                                    {{ cake_type.tag }}
+                                    <label for="{{ cake_type.id_for_label }}">{{ cake_type.choice_label }}</label>
+                                {% endfor %}
+                                {{ cart_form.cake_type.errors }}
+                            </nav>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-2">Weight (lbs)</td>
+                        <td class="col-md-10">
+                            <div class="input-group col-xs-10 col-md-6 col-lg-3">
+                                <span class="input-group-btn">
+                                    <button onclick="minusButton('{{ cart_form.weight.auto_id }}', {{ item_detail.minsize }}, 20)" id="weight_minus_button" type="button" class="btn btn-default btn-number" data-type="minus" data-field="weight">
+                                        <span class="glyphicon glyphicon-minus"></span>
+                                    </button>
+                                </span>
+                                {{ cart_form.weight }}
+                                <span class="input-group-btn">
+                                    <button onclick="plusButton('{{ cart_form.weight.auto_id }}', {{ item_detail.minsize }}, 20)" id="weight_plus_button" type="button" class="btn btn-default btn-number" data-type="plus" data-field="weight">
+                                        <span class="glyphicon glyphicon-plus"></span>
+                                    </button>
+                                </span>
+                            </div>
+                            {{ cart_form.weight.errors }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-2">Quantity</td>
+                        <td class="col-md-10">
+                            <div class="input-group col-xs-10 col-md-6 col-lg-3">
+                                <span class="input-group-btn">
+                                    <button onclick="minusButton('{{ cart_form.quantity.auto_id }}', 1, 5)" id="quantity_minus_button" type="button" class="btn btn-default btn-number" data-type="minus" data-field="quantity">
+                                        <span class="glyphicon glyphicon-minus"></span>
+                                    </button>
+                                </span>
+                                {{ cart_form.quantity }}
+                                <span class="input-group-btn">
+                                    <button onclick="plusButton('{{ cart_form.quantity.auto_id }}', 1, 5)" id="quantity_plus_button" type="button" class="btn btn-default btn-number" data-type="plus" data-field="quantity">
+                                        <span class="glyphicon glyphicon-plus"></span>
+                                    </button>
+                                </span>
+                            </div>
+                            {{ cart_form.quantity.errors }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-2">Cake Flavor</td>
+                        <td class="col-md-10">
+                            {{ cart_form.flavor }}
+                            {{ cart_form.flavor.errors }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-2">Cake Shape</td>
+                        <td class="col-md-10">
+                            {{ cart_form.shape }}
+                            {{ cart_form.shape.errors }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-2">Message on cake</td>
+                        <td class="col-md-10">
+                            {{ cart_form.message_on_cake }}
+                            {{ cart_form.message_on_cake.errors }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-3">
+                            <button type="submit" class="btn btn-primary btn-add">
+                                <i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;Add to cart
+                            </button>
+                        </td>
+                        <td class="col-md-3">
+                            <a class="btn btn-primary btn-add"  data-toggle="modal" data-target="#phoneOrderModal"><i class="fa fa-phone"></i>&nbsp;&nbsp;Phone order</a>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+
+    <!-- Pop up box for phone order -->
+    <div class="modal fade" id="phoneOrderModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <h3 class="modal-title" id="lineModalLabel">Order By Phone</h3>
+            </div>
+            <div class="modal-body">
+                <p>Call us: +977 {% for number in PHONE_NUMBERS %}{{ number }}{% if not forloop.last %} / {% endif %}{% endfor %}</p>
+                <div class="modal-or" style="text-align: center">
+                    <hr class="hr-or">
+                    <span class="span-or">Or Let us call you</span>
+                    <br>
+                    <p><a href="https://m.me/cake.ghorahi" target="_blank" rel="noreferrer nofollow">Please leave your Name & Mobile/Phone numbers below. We will call you as soon as possible.</a></p>
+                    <iframe
+                        src="https://www.facebook.com/plugins/page.php?href=https://www.facebook.com/cake.ghorahi&tabs=messages&width=340&height=350&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId=425224041406795"
+                        width="340" height="350" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!--Addition information about cake-->
+{#    <div class="row">#}
+{#        <div class="col-md-12">#}
+{#            <ul class="nav nav-tabs">#}
+{#                <li class="active"><a href="#cake-details" data-toggle="tab">Cake Details</a></li>#}
+{#                <li><a href="#reviews" data-toggle="tab">Reviews</a></li>#}
+{#            </ul>#}
+{#            <div class="tab-content">#}
+{#                <!-------------------------------Itenary Details Tab begins------------------------------------>#}
+{#                <div id="cake-details" class="tab-pane active">#}
+{#                    <p style="text-align: justify;">Black Forest cake consists of several layers of chocolate cake, with whipped cream and cherries#}
+{#                        between each layer. Then the cake is decorated with additional whipped cream, cherries, and chocolate#}
+{#                        shavings. An absolute favorite of many !!!Delicious lovingly made black forest cake. Fluffy garnished with#}
+{#                        dark Choco chip with decorated with red cherry. The beautiful frosting tastes as great as it looks. Fresh#}
+{#                        ingredients used. Very sophisticated desert in sweet little price. Baked to perfection. Celebrate any special#}
+{#                        occasion with this black forest cake. Donot underestimate this cake for being simple and priced low, it can be#}
+{#                        a perfect choice for almost anyone with its excellent taste and simplicity. Winni.in offers you to buy black#}
+{#                        forest cake online in eggless and heart shape as well. Simply choose the type of cake you want for delivery#}
+{#                        from options above and we will make it as per your demands. Not just that, you can order black forest cake in#}
+{#                        other sizes and shapes as well. Extra charges will apply based on customization. Just give us a call or drop#}
+{#                        an email we will make it happen for you.</p>#}
+{#                </div>#}
+{#                <div id="reviews" class="tab-pane">#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+
+    <!-- Similar cakes -->
+    <div class="row left-content">
+        <div class="col-md-12 heading">
+            <h2 class="text-center">You may also like...</h2>
+        </div>
+
+        <div class="row">
+        {% for cake in recommended_cakes %}
+        <!--Cake-->
+        <div class="col-md-3 col-sm-6 col-xs-12 hvr-float-shadow">
+            <div class="cake">
+                <div class="cake-img-recommend">
+                    <a href="{% url 'product_detail' cake.id cake.name|slugify %}">
+                        <img src="{{ cake.image.url }}" alt="cake" class="img img-responsive center">
+                    </a>
+                </div>
+                <div class="cake-info">
+                    <h4 class="cake-name">
+                        <a href="{% url 'product_detail' cake.id cake.name|slugify %}">
+                            {{ cake.name|title }}
+                        </a>
+                    </h4>
+                    <p class="cake-price">Rs {{ cake.price }} per lbs</p>
+                </div>
+                <div class="cake-btn">
+                    <a href={% url 'product_detail' cake.id cake.name|slugify %}" title="Add to Cart" class="hvr-buzz">
+                        <i class="fa fa-shopping-cart"></i>
+                    </a>
+                    <a href="#" title="Add to Wishlist" class="hvr-buzz">
+                        <i class="fa fa-heart"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock %} {# main content end #}
+
+
+{% block js_files_bottom %}
+
+{{ block.super }}
+
+<!-- Elevate Zoom -->
+<script type="text/javascript" src="{% static 'js/jquery.elevatezoom.js' %}"></script>
+<!-- Slick JS -->
+<script type="text/javascript" src="{% static 'js/slick.min.js' %}"></script>
+<!-- Custom JS -->
+<script type="text/javascript" src="{% static 'js/custom.js' %}"></script>
+
+<script>
+    $('#zoom_01').elevateZoom({
+        zoomType: "inner",
+        cursor: "crosshair",
+        zoomWindowFadeIn: 500,
+        zoomWindowFadeOut: 750
+    });
+
+    function minusButton(targetInputId, minWeight, maxWeight) {
+        maxWeight = maxWeight || 99999
+
+        var newValue = $('#'+targetInputId).val() - 1
+
+        if (newValue < minWeight){
+            newValue = minWeight
+        } else if (newValue > maxWeight) {
+            newValue = maxWeight
+        }
+
+        $('#'+targetInputId).val(newValue)
+        updatePrice()
+    }
+
+    function plusButton(targetInputId, minWeight, maxWeight) {
+        maxWeight = maxWeight || 99999
+
+        var newValue = +$('#'+targetInputId).val() + 1
+
+        if (newValue < minWeight){
+            newValue = minWeight
+        } else if (newValue > maxWeight) {
+            newValue = maxWeight
+        }
+
+        $('#'+targetInputId).val(newValue)
+
+        updatePrice()
+    }
+    var flavors = {% autoescape off %}{{ flavors }}{% endautoescape %}
+    var shapes = {% autoescape off %}{{ shapes }}{% endautoescape %}
+    var eggContent = {% autoescape off %}{{ egg_content }}{% endautoescape %}
+
+    var basePricePerPound = {{ item_detail.price }}
+    var flavorPrice = 0
+    var shapePrice = 0
+    var eggPrice = 0
+
+    function updatePrice() {
+      var weight = +$('#id_weight').val()
+      var quantity = +$('#id_quantity').val()
+      var totalPrice = (basePricePerPound + flavorPrice + shapePrice + eggPrice) * weight * quantity
+      $('#productPrice').html('Rs. ' + totalPrice)
+    }
+
+    function updateFlavor() {
+        var flavorid = +$('#id_flavor').val()
+        flavor = flavors.filter(function (a) {return a.id === flavorid})
+        if (flavor.length > 0) {
+            flavor = flavor[0]
+            flavorPrice = flavor.extraprice
+        }
+        updatePrice()
+    }
+    function updateShape() {
+        var shapeid = +$('#id_shape').val()
+        shape = shapes.filter(function(a){return a.id===shapeid})
+
+        if (shape.length > 0){
+            shape = shape[0]
+            shapePrice = shape.extraprice
+        }
+        updatePrice()
+    }
+    function updateEggPrice() {
+        var eggless = $('input[name="cake_type"]:checked').val() === 'Eggless'
+        if (eggless) {
+            eggPrice = eggContent['eggless']
+        } else {
+            eggPrice = 0
+        }
+        updatePrice()
+    }
+    $('#id_flavor').on('change', updateFlavor)
+    $('#id_shape').on('change', updateShape)
+    $('input[name="cake_type"]').on('change', updateEggPrice)
+
+    $(document).ready(function() {updateFlavor();updateShape();})
+</script>
+
+{% endblock %}

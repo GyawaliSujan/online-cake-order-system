@@ -1,0 +1,35 @@
+{% extends "__base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}Logout{% endblock %}
+
+{% block main_content_area %}
+
+    <div class="container">
+
+        <div class="center-block text-center login">
+            <h1>{% trans "Sign Out" %}</h1>
+
+            <p>{% trans 'Are you sure you want to sign out?' %}</p>
+
+            <form method="post" action="{% url 'account_logout' %}">
+                {% csrf_token %}
+                {% if redirect_field_value %}
+                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+                {% endif %}
+                <button type="submit" class="btn btn-primary">{% trans 'Sign Out' %}</button>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block js_files_bottom %}
+    {{block.super}}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.login').css('height', '75vh');
+        })
+    </script>
+{% endblock %}

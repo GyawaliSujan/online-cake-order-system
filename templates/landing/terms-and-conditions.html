@@ -1,0 +1,117 @@
+{% extends '__base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+
+{% block title %}
+	{{title}}
+{% endblock %}
+
+{% block main_content_area %}
+    <section class="container">
+    <div class="row">
+        <div class="breadcrumblist">
+            <ul class="breadcrumb">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="#">Terms and Conditions</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 faq">
+            <h2>Terms and Conditions</h2>
+            <div class="qa">
+              PLEASE READ THIS AGREEMENT CAREFULLY. IT SETS OUT THE TERMS UNDER WHICH Cake-G OFFERS
+              YOU USE OF ITS SERVICES AS DEFINED IN CLAUSE 1.1 OF THIS AGREEMENT BY MEANS OF CAKEG
+              (THE "WEBSITE"). BY USING ANY OF THE SERVICES AND/OR THE WEBSITE YOU AGREE THAT YOU HAVE
+              READ AND ACCEPT THESE TERMS AND CONDITIONS AND THAT THEY SHALL APPLY TO YOUR USE. IF YOU
+              DO NOT WISH TO BE BOUND BY THEM, PLEASE DO NOT REGISTER FOR OR USE THIS WEBSITE.
+            </div>
+            <div class="qa">
+                This Agreement is made between you and CAKE-G
+            </div>
+            <div class="qa">
+                1. The Services
+                <div class="ml-15 mt-5">
+                  1.1
+                  <span class="ml-5">By means of the Website, Cake-G makes available an on-line ordering of cake, where
+                  users place order of cake.
+                  </span>
+                </div>
+                <div class="ml-15 mt-5">
+                  1.2
+                  <span class="ml-5"> The Services are only available on the completion of the registration section of the
+                  Website including confirmation that the relevant terms and conditions have been read
+                  and accepted.
+                  </span>
+                </div>
+            </div>
+            <div class="qa">
+                2. Use of the Website and the Services
+                <div class="ml-15 mt-5">
+                  2.1
+                  <span class="ml-5">The Website and the Services are for personal and non-commercial use only. You may copy
+                  electronically and print portions of the Website and/or the Services for your personal,
+                  non-commercial use only. In particular, you may not use any information from any directory
+                  or other listing or information retrieval service (if any) made available on the Website
+                  and/or the Services, in connection with any business or commercial undertaking (whether or
+                  not for profit). Any other use of materials on the Website and/or the Services (including
+                  without limitation reproduction for a purpose other than that noted above and any
+                  modification, distribution or republication) without the prior written permission of
+                  Cake-G is strictly prohibited. You also agree not to deep-link and/or frame the Website
+                  or any of the Services for any purpose, unless specifically authorised by Cake-G to do so.
+                  </span>
+                </div>
+                <div class="ml-15 mt-5">
+                  2.2
+                  <span class="ml-5">You agree that you shall not use the Website or the Services to transmit or knowingly
+                  or recklessly receive (or knowingly or recklessly authorise or permit any other person
+                  to receive or transmit) material which is obscene, threatening, menacing, offensive,
+                  defamatory, abusive, untrue, in breach of confidence, in breach of any intellectual
+                  property right (including copyright) or which may cause anxiety to others including
+                  racist or sexist content or material which otherwise violates any applicable law or
+                  regulation or code, or which makes excessive demands for bandwidth or contains any
+                  virus or which may otherwise impair or harm Cake-G's computer systems or any third party computer system.
+                  </span>
+                </div>
+                <div class="ml-15 mt-5">
+                  2.3
+                  <span class="ml-5">
+                    Cake-G makes no warranty that the contents of any and all e-mails communicated through
+                    the Site are free from infection by viruses or anything else which has contaminating
+                    or destructive properties and shall have no liability in respect thereof.
+                  </span>
+                </div>
+                <div class="ml-15 mt-5">
+                  2.4
+                  <span class="ml-5">
+                    The Website and/or the Services may include links to websites and/or services owned
+                    and/or operated by third parties. These are provided for your convenience only and
+                    Cake-G is not responsible for and does not give any warranties or make any
+                    representations regarding any such websites and/or services and is not responsible
+                    for or liable in relation to the content or your use of such websites (save to the
+                    extent required by law).
+                  </span>
+                </div>
+                <div class="ml-15 mt-5">
+                  2.5
+                  <span class="ml-5">
+                   You acknowledge that Cake-G is not responsible for third party content on the Website
+                    and that Cake-G cannot ensure that material presented on the Internet is legal.
+                    Cake-G will not limit access to material u
+                  </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}
+
+{% block  js_files_bottom %}
+    {{ block.super }}
+
+    <!-- Custom JS -->
+    <script type="text/javascript" src="{% static 'js/custom.js' %}"></script>
+
+{% endblock %}

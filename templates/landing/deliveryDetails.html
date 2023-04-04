@@ -1,0 +1,240 @@
+{% extends '__base.html' %}
+
+{% load staticfiles %}
+{% load bootstrap3 %}
+
+{% block css_files %}
+    {{ block.super }}
+    <!-- Date time picker -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/jquery.datetimepicker.css'  %}">
+    <style>
+       #map {
+        height: 300px;
+        width: 100%;
+       }
+    </style>
+{% endblock %}
+
+
+{% block main_content_area %}
+
+<div class="container delivery-info">
+    <form method="post" onsubmit="return checkForTermsAndCondition()">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-7 delivery-details">
+                <div class="row">
+                    <p><strong>Personlize your gift</strong></p>
+                    {% if not num_cart_items %}
+                    <div class="col-sm-12 input-box">
+                        <div style="color:red">You have got nothing in your cart to checkout!!!</div>
+                    </div>
+                    {% endif %}
+                    <div class="col-sm-6 input-box">
+                        {% bootstrap_field checkoutForm.delivery_time %}
+{#                        <label for="date">Delivery Date</label>#}
+{#                        <input type="date" class="form-control" name="DeliveryDate" id="date">#}
+                    </div>
+                    <div class="col-sm-12 input-box">
+                        {% bootstrap_field checkoutForm.message %}
+{#                        <label for="message">Message</label>#}
+{#                        <textarea class="form-control" placeholder="Message" id="message"></textarea>#}
+                    </div>
+{#                    <div class="col-sm-6 input-box">#}
+{#                        <select class="form-control" name="birthday">#}
+{#                            <option>Birthday</option>#}
+{#                        </select>#}
+{#                    </div>#}
+                </div>
+                <div class="row">
+                    <p><strong>Receiver Information</strong></p>
+                    <div class="col-sm-6 input-box">
+                        {% bootstrap_field receiverForm.name %}
+{#                        <label for="name">Fullname</label>#}
+{#                        <input type="text" class="form-control" name="name" id="name">#}
+                    </div>
+                    <div class="col-sm-6 input-box">
+                        {% bootstrap_field receiverForm.phone_number %}
+{#                        <label for="phone">Phone Number</label>#}
+{#                        <input type="text" class="form-control" name="phone" id="phone">#}
+                    </div>
+
+                    <p><strong>Secondary Contact Information</strong></p>
+                    <div class="col-sm-6 input-box">
+                        {% bootstrap_field secondaryReceiverForm.name %}
+                    </div>
+                    <div class="col-sm-6 input-box">
+                        {% bootstrap_field secondaryReceiverForm.phone_number %}
+                    </div>
+
+                    <div class="col-sm-6 input-box">
+                        {% bootstrap_field locationForm.location %}
+                    </div>
+                    <div class="col-sm-3 input-box">
+                        {% bootstrap_field locationForm.latitude set_disabled=False size='small' %}
+                    </div>
+                    <div class="col-sm-3 input-box">
+                        {% bootstrap_field locationForm.longitude set_disabled=False size='small' %}
+                    </div>
+                    <div class="row">
+                        <div id="map"></div>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="col-md-5 order-summary">
+                <p><strong>Order Summary</strong></p>
+                <table class="table table-responsive">
+                    <tr class="no-border">
+                        <td colspan="2"><b>{{ num_cart_items }} items</b></td>
+                    </tr>
+                    <tr>
+                        <td>Cart Total</td>
+                        <td> Rs {{ total_price }}</td>
+                    </tr>
+                    <tr class="no-border">
+                        <td>Delivery Charge</td>
+                        <td>Rs 0</td>
+                    </tr>
+                    <tr>
+                        <th>Total Payable</th>
+                        <th>Rs {{ total_price }}</th>
+                    </tr>
+                </table>
+{#                <p><strong>Payment Method</strong></p>#}
+{#                <div class="customer-info">#}
+{#                     <select class="form-control" name="payment" id='payment_method' onchange="paymentMethodChange()">#}
+{#                          <option value="cash_on_delivery">Cash on Delivery</option>#}
+{#                          <option value="paypal_payment">Paypal</option>#}
+{#                    </select>#}
+{##}
+{#                </div>#}
+
+
+                <div class="terms">
+                    <p>
+                        <input type="checkbox" class="" id="agreeTerms"> I agree with the <a href="{% url 'terms_and_condition' %}">Terms and Condition.</a>
+                    </p>
+                    <button type="submit" class="btn btn-primary btn-add">Continue to Payment</button>
+{#                    </form>#}
+{#                    {{ paypal_form.render }}#}
+                    <img src="{% static 'img/comodo_secure_seal_113x59_transp.png' %}" alt="logo" class="img img-resposive" width="" height="">
+                </div>
+
+                <div class="help">
+                    <p><b>Need Help With This Order?</b></p>
+                    <p><a href="tel:+977{{ PHONE_NUMBERS.0 }}"><i class="fa fa-phone"></i> +977 {{ PHONE_NUMBERS.0 }}]</a>(8:00-5:00 NST) </p>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %} {# main content end #}
+
+
+{% block js_files_bottom %}
+
+{{ block.super }}
+<!-- Custom JS -->
+<!-- Date time picker -->
+<script src="{% static 'js/jquery.datetimepicker.full.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/custom.js' %}"></script>
+<script type="text/javascript">
+function checkForTermsAndCondition(){
+    if (document.getElementById('agreeTerms').checked){
+        return true
+    }
+    alert("You must agree on our terms and conditions before proceeding.")
+    return false
+}
+
+{#function paymentMethodChange() {#}
+{#    var paymentMethod = document.getElementById("payment_method").value#}
+{#    if (paymentMethod === 'paypal_payment') {#}
+{##}
+{#    }#}
+{#}#}
+
+
+
+$('#id_checkout-delivery_time').datetimepicker({
+    format: 'Y-m-d H:i',
+    minDate: '+1970/01/02',
+    defaultDate:'+1970/01/02',
+    defaultTime:'11:00',
+    allowTimes: ['11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00'],
+    disabledDates: {{ holidays|safe }},
+    formatDate: 'Y-m-d'
+
+});
+</script>
+
+<script>
+  function initMap() {
+    function updateLatLngChanged(lat, lng) {
+      $("#id_location-latitude").val(lat)
+      $("#id_location-longitude").val(lng)
+      geocodeLatLng(geocoder, lat, lng)
+    }
+    var uluru = {lat: 27.6524867, lng: 85.4555674};
+    var geocoder = new google.maps.Geocoder;
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 13,
+      center: uluru,
+    scrollwheel: false
+    });
+    var marker = new google.maps.Marker({
+      position: uluru,
+      map: map,
+      draggable: true
+    });
+    map.addListener('click', function(pos) {
+      marker.setPosition(pos.latLng)
+
+      updateLatLngChanged(pos.latLng.lat(), pos.latLng.lng())
+    });
+
+    marker.addListener('dragend', function(mouseEvent) {
+      updateLatLngChanged(mouseEvent.latLng.lat(), mouseEvent.latLng.lng())
+    })
+
+    autocomplete = new google.maps.places.Autocomplete(document.getElementById('id_location-location'), {types:[ 'geocode']})
+    autocomplete.addListener('place_changed', function(){
+      var place = autocomplete.getPlace()
+
+      updateLatLngChanged(place.geometry.location.lat(), place.geometry.location.lng())
+
+      map.setCenter(place.geometry.location)
+      marker.setPosition(place.geometry.location)
+    });
+
+
+
+
+  }
+
+  function geocodeLatLng(geocoder, lat, lng) {
+    var latlng = {lat: lat, lng: lng};
+    geocoder.geocode({'location': latlng}, function(results, status) {
+      if (status === 'OK') {
+        if (results[1]) {
+          $('#id_location-location').val(results[1].formatted_address)
+        } else {
+          window.alert('No results found');
+        }
+      } else {
+        window.alert('Geocoder failed due to: ' + status);
+      }
+    });
+  }
+
+</script>
+<script async defer
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_zcLeKW3LB0rCzda4mFAF3UmlPaJnero&libraries=places&callback=initMap">
+</script>
+
+
+
+{% endblock %}

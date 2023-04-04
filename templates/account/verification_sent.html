@@ -1,0 +1,23 @@
+{% extends "__base.html" %}
+{% load static from staticfiles %}
+
+
+{% block title %} Email verification sent {% endblock %}
+
+{% block navbar_links %}
+    <li><a href="{% url 'account_login' %}">Login</a></li>
+{% endblock %}
+
+{% block main_content_area %}
+
+    <div class="center-block text-center login">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <p>We have sent an e-mail to you for verification.</p>
+                <p>Please check your email and click on the activation link to activate your account.</p>
+                <p>If you have not received your activation email please check your spam folder. </p>
+            </div>
+        </div>
+     </div>
+
+{% endblock %}

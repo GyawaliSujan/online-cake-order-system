@@ -1,0 +1,50 @@
+{% extends "__base.html" %}
+{% load static from staticfiles %}
+{% load bootstrap3 %}
+
+{% block title %}Sign Up{% endblock %}
+
+
+{% block navbar_links %}
+{% endblock %}
+
+
+{% block main_content_area %}
+    <div class="container">
+        <div class="row">
+
+            <div class="main col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1">
+
+                <h3>Please Register to Cake-G</h3>
+
+                <form id="registration_form" method="post" role="form" action=""> {% csrf_token %}
+                    {{ form.non_field_errors }}
+                    <div class="form-group">
+                        {{form.email.errors}}
+                        {% bootstrap_field form.email layout='inline' %}
+                    </div>
+                    <div class="form-group">
+                        {{form.password1.errors}}
+                        {% bootstrap_field form.password1 layout='inline' %}
+                    </div>
+                    <div class="form-group">
+                        {{form.password2.errors}}
+                        {% bootstrap_field form.password2 layout='inline' %}
+                    </div>
+                    <div class="form-group">
+                      <input name="terms" type="checkbox" required>
+                      I have read and agree to all <a href="{% url 'terms_and_condition' %}">Terms</a>
+                    </div>
+                    <button type="submit" class="btn btn btn-primary btn-add">
+                        Register
+                    </button>
+                    <p style="margin-top: 7px;">Already registered? <a href="{% url 'account_login' %}">Login to your account </a></p>
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+
+
+{% endblock %}

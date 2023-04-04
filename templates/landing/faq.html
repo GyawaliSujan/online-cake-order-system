@@ -1,0 +1,98 @@
+{% extends '__base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+
+{% block title %}
+	FAQ
+{% endblock %}
+
+{% block main_content_area %}
+    <section class="container">
+    <div class="row">
+        <div class="breadcrumblist">
+            <ul class="breadcrumb">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="#">FAQ's</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 faq">
+            <h2>Frequently Asked Questions</h2>
+            <div class="qa">
+                <div class="question">
+                    What are the modes of Payment?
+                </div>
+                <div class="answer">
+                  We at the cake-g.com provide you the perfect service at lowest possible cost to save
+                  your money, keep our administration costs low and provide you 100% security. By accepting
+                  Credit Cards. We accept all VISA / MASTER CARD / AMERICAN EXPRESS / JCB / MAESTRO and Wire
+                  Transfer via bank / Cash on Delivery.
+                </div>
+            </div>
+            <div class="qa">
+                <div class="question">
+                    Can I change the Delivery address or Delivery date of Order?
+                </div>
+                <div class="answer">
+                  We will change the delivery address or delivery date as long as your order has not
+                  been delivered or is not on its way to being delivered. To request a change to delivery
+                  address, Please send us the new address at order
+                  <a href='//m.me/cake.ghorahi' rel="noreferrer nofollow" target="_blank"> @cake.ghorahi</a>
+                  or call at {{ PHONE_NUMBERS.0 }}.
+                </div>
+            </div>
+            <div class="qa">
+                <div class="question">
+                    Can I mention Specific Delivery time?
+                </div>
+                <div class="answer">
+                  Yes, you can mention specific delivery time and we will try to make it on your favorable
+                  time . However please note that we do guarantee delivery of your order on your chosen
+                  date but do not guarantee the time always specially during the festival times.
+                </div>
+            </div>
+            <div class="qa">
+                <div class="question">
+                    Will my Order Deliver on same day I order?
+                </div>
+                <div class="answer">
+                  Orders Placed before 24  hours will be considered for the Delivery .
+                </div>
+            </div>
+            <div class="qa">
+                <div class="question">
+                  How do I know cake-g.com has received my order or not?
+                </div>
+                <div class="answer">
+                  As soon as we receive your order, an email is sent to the email id provided in the checkout form.
+                </div>
+            </div>
+            <div class="qa">
+                <div class="question">
+                  When will the Order Delivered at What Time?
+                </div>
+                <div class="answer">
+                  We can guarantee the time of delivery according to your order. If your cakes need to
+                  reach the recipient at a specific time please mention it in the additional information
+                  box in checkout form or message us
+                  <a href='//m.me/cake.ghorahi' rel="noreferrer nofollow" target="_blank">@cake.ghorahi</a>
+                  with your order number. Our delivery staff will do their utmost to meet your delivery
+                  time request.
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}
+
+{% block  js_files_bottom %}
+    {{ block.super }}
+
+    <!-- Custom JS -->
+    <script type="text/javascript" src="{% static 'js/custom.js' %}"></script>
+
+{% endblock %}

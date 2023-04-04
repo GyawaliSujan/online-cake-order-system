@@ -1,0 +1,51 @@
+{% load staticfiles %}
+
+<!--Navigation section -->
+    <header>
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="{% url 'home' %}">
+                        <img src="{% static 'img/logo.jpg' %}" alt="logo" class="img img-resposive" width="60" height="60">
+                    </a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <nav id="main-menu" class="collapse navbar-collapse navbar-right">
+                    <div class="top-section" id="top-section">
+                        <a href="{% url 'shoppingcart' %}"><i class="fa fa-shopping-cart"></i>  Cart <span class="no-of-item">&nbsp;({{ num_cart_items|default:0 }})</span></a>
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'account_logout' %}"><i class="fa fa-sign-out"></i>  Logout</a>
+                            <a href="{% url 'profile' %}"><i class="fa fa-user"></i>  My Account</a>
+
+                        {% else %}
+                            <a href="{% url 'account_login' %}"><i class="fa fa-sign-in"></i>  Login</a>
+                            <a href="{% url 'account_signup' %}"><i class="fa fa-file-text-o"></i>  Register</a>
+                        {% endif %}
+                       
+                    </div>
+
+
+                    <ul class="nav navbar-nav">
+                        <li {% if "Home" in title %}class="active"{% endif %}><a href="{% url 'home' %}">Home</a></li>
+                        <li {% if "About" in title %}class="active"{% endif %}><a href="{% url 'about' %}">About</a></li>
+                        {% if request.user.is_superuser %}
+                            <li><a href="{% url 'admin.add_category' %}">Add Category</a></li>
+                            <li><a href="{% url 'admin.add_product' %}">Add Product</a></li>
+                        {% else %}
+                           <!--  <li><a href="{% url 'product_search' %}">Birthday Cakes</a></li>
+                            <li><a href="{% url 'product_search' %}">Wedding Cakes</a></li> -->
+                        {% endif %}
+                        <li {% if "Faq" in title %}class="active"{% endif %}><a href="{% url 'faq' %}">FAQ</a></li>
+                        <li {% if "Contact" in title %}class="active"{% endif %}><a href="{% url 'contact' %}" class="no-padding-right">Contact</a></li>
+                    </ul>
+                </nav><!-- /.navbar-collapse -->
+            </div><!-- /.container -->
+        </nav><!-- nav -->
+    </header>

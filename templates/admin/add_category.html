@@ -1,0 +1,48 @@
+{% extends '__base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+
+{% block title %}
+	Add Category - Admin
+{% endblock %}
+
+{% block main_content_area %}
+
+
+    <div class="container">
+        <div class="row">
+
+            <div class="main col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1">
+
+                <h3>Add Category</h3>
+
+                <form id="registration_form" method="post" role="form" action=""> {% csrf_token %}
+                    {{ form.non_field_errors }}
+                    <div class="form-group">
+                        {{form.name.errors}}
+                        {% bootstrap_field form.name layout='inline' %}
+                    </div>
+                    <div class="form-group">
+                        {{form.description.errors}}
+                        {% bootstrap_field form.description layout='inline' %}
+                    </div>
+
+                    <button type="submit" class="btn btn btn-primary btn-add">
+                        Add Category
+                    </button>
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block  js_files_bottom %}
+    {{ block.super }}
+
+    <!-- Custom JS -->
+    <script type="text/javascript" src="{% static 'js/custom.js' %}"></script>
+
+{% endblock %}

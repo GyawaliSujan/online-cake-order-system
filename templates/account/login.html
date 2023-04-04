@@ -1,0 +1,71 @@
+{% extends "__base.html" %}
+{% load static from staticfiles %}
+{% load bootstrap3 %}
+{% load socialaccount %}
+
+
+{% block title %}Login{% endblock %}
+
+
+
+{% block main_content_area %}
+
+    {% if not user.is_authenticated    %}
+        <div class="container">
+          <div class="row">
+
+              <div class="main col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1">
+
+                  <h3>Please Log In to Cake-G</h3>
+                  <h4 class="text-center"><small>Easily using</small></h4>
+                  <div class="row">
+                      <div class="col-xs-6 col-sm-6 col-md-6">
+                          <a href="{% provider_login_url 'facebook' method='oauth2' %}" class="btn btn-lg btn-primary btn-block"><i class="fa fa-facebook" aria-hidden="true"></i> Facebook</a>
+                      </div>
+                      <div class="col-xs-6 col-sm-6 col-md-6">
+                          <a href="{% provider_login_url 'google' method='oauth2' %}" class="btn btn-lg btn-danger btn-block"><i class="fa fa-google" aria-hidden="true"></i> Google</a>
+                      </div>
+                  </div>
+                  <div class="login-or">
+                      <hr class="hr-or">
+                      <span class="span-or">or</span>
+                  </div>
+
+                  <form role="form" method="post" id="login_form" action="{% url 'account_login' %}">
+                      {% csrf_token %}
+                      {% if redirect_field_value %}
+                        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                      {% endif %}
+                      {{ form.non_field_errors }}
+                      <div class="form-group">
+                         {% bootstrap_field form.login layout='inline'%}
+                      </div>
+                      <div class="form-group">
+                          <a class="pull-right" href="{% url 'account_reset_password' %}">Forgot password?</a>
+                          {{form.password.errors}}
+                        {% bootstrap_field form.password layout='inline' %}
+                      </div>
+                      <!-- <div class="checkbox pull-right">
+                          <label>
+                              <input type="checkbox">
+                              Remember me </label>
+                      </div> -->
+                      <button type="submit" class="btn btn btn-primary btn-add">
+                          Log In
+                      </button>
+                      <p style="margin-top: 7px;">Not registered yet? <a href="{% url 'account_signup' %}">Create an account </a></p>
+                  </form>
+
+              </div>
+
+          </div>
+        </div>
+
+
+    {% else %}
+
+        <h3>You're already logged in!</h3>
+
+    {% endif %}
+
+{% endblock %}
