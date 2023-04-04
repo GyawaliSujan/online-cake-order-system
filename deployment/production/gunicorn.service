@@ -1,0 +1,12 @@
+[Unit]
+Description=mrcake gunicorn daemon
+After=network.target
+
+[Service]
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/mrcake
+ExecStart=/var/www/mrcake/venv/bin/gunicorn --workers 3 --bind unix:/var/www/mrcake/mrcake.sock --error-logfile /var/www/mrcake/logs/gunicorn.error.log --access-logfile /var/www/mrcake/logs/gunicorn.access.log mrcake.wsgi:application
+
+[Install]
+WantedBy=multi-user.target
